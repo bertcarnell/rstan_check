@@ -1,0 +1,37 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+#
+# See https://github.com/r-lib/actions/tree/master/examples#readme for
+# additional example workflows available for the R community.
+
+name: R
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        r-version: [4.1.1]
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up R ${{ matrix.r-version }}
+        uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: ${{ matrix.r-version }}
+          
+      - name: Install basics
+        run: |
+          install.packages(c('sp','xtable','Rcpp','polyCub','spatstat.geom','spatstat','spatstat.data','spatstat.core','spatstat.linnet','spatstat.utils','deldir','polyclip','spatstat.sparse','abind','tensor','goftest','digest','glue','gtable','isoband','rlang','scales','tibble','withr','farver','labeling','lifecycle','munsell','R6','RColorBrewer','viridisLite','ellipsis','fansi','magrittr','pillar','pkgconfig','vctrs','colorspace','cli','crayon','utf8','zip','stringi','ggplot2','RgoogleMaps','png','plyr','rjson','jpeg','dplyr','bitops','httr','stringr','purrr','tidyr','generics','tidyselect','curl','jsonlite','mime','openssl','cpp11','askpass','sys','evaluate','highr','yaml','xfun','base64enc','fastmap'), repos = "https://cloud.r-project.org/")
+        shell: Rscript {0}
+        
+      - name: Install Targets
+        run: |
+          install.packages(c('surveillance','ggplot2','openxlsx','ggmap','sp','maps','maptools','gpclib','plyr','knitr','htmltools'))
